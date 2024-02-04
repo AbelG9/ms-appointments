@@ -1,14 +1,8 @@
 package com.codigo.msappointments.aggregates.request;
 
-import com.codigo.msappointments.entity.PersonsEntity;
-import com.codigo.msappointments.entity.SpecialistsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 
 @Getter
 @Setter
