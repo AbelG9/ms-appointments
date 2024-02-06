@@ -15,6 +15,18 @@
 	<description>Project for find, validate and register appointments</description>
 	<properties>
 		<java.version>17</java.version>
+		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<sonar.host.url>http://localhost:9000/</sonar.host.url>
+		<sonar.projectKey>exa2</sonar.projectKey>
+		<sonar.projectName>exa2</sonar.projectName>
+
+		<!-- Exclusión de archivos -->
+		<sonar.exclusions>
+			**/MsAppointmentsApplication.java,
+			**/AppointmentsController.java,
+			**/AppointmentsValidations.java,
+			**/MsAppointmentsApplicationTests.java
+		</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -61,6 +73,30 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.8.0.2131</version>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
