@@ -1,7 +1,7 @@
 package com.codigo.msappointments.controller;
 
+import com.codigo.appointmentslibrary.response.ResponseBase;
 import com.codigo.msappointments.aggregates.request.RequestAppointment;
-import com.codigo.msappointments.aggregates.response.ResponseBase;
 import com.codigo.msappointments.service.AppointmentsService;
 import org.springframework.web.bind.annotation.*;
 

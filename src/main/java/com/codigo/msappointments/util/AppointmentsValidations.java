@@ -1,5 +1,6 @@
 package com.codigo.msappointments.util;
 
+import com.codigo.appointmentslibrary.util.Util;
 import com.codigo.msappointments.aggregates.request.RequestAppointment;
 import com.codigo.msappointments.repository.AppointmentsRepository;
 import org.springframework.stereotype.Component;

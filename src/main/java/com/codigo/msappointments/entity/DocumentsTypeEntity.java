@@ -1,6 +1,6 @@
 package com.codigo.msappointments.entity;
 
-import com.codigo.msappointments.aggregates.model.Audit;
+import com.codigo.appointmentslibrary.model.Audit;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;

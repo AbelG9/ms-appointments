@@ -1,8 +1,9 @@
 package com.codigo.msappointments.service.impl;
 
+import com.codigo.appointmentslibrary.constants.Constants;
+import com.codigo.appointmentslibrary.response.ResponseBase;
+import com.codigo.appointmentslibrary.util.Util;
 import com.codigo.msappointments.aggregates.request.RequestAppointment;
-import com.codigo.msappointments.aggregates.response.ResponseBase;
-import com.codigo.msappointments.constants.Constants;
 import com.codigo.msappointments.entity.AppointmentsEntity;
 import com.codigo.msappointments.entity.PersonsEntity;
 import com.codigo.msappointments.entity.SpecialistsEntity;
@@ -11,7 +12,6 @@ import com.codigo.msappointments.repository.PersonsRepository;
 import com.codigo.msappointments.repository.SpecialistsRepository;
 import com.codigo.msappointments.service.AppointmentsService;
 import com.codigo.msappointments.util.AppointmentsValidations;
-import com.codigo.msappointments.util.Util;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
