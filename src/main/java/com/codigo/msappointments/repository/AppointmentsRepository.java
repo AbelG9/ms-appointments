@@ -4,4 +4,5 @@ import com.codigo.msappointments.entity.AppointmentsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AppointmentsRepository extends JpaRepository<AppointmentsEntity, Integer> {
+    boolean existsBySpecialistAndPerson(int personsId, int specialistsId);
 }

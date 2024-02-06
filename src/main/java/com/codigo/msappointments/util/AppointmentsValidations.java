@@ -25,4 +25,8 @@ public class AppointmentsValidations {
         }
         return true;
     }
+
+    public boolean validateExistsAppointment(RequestAppointment requestAppointment) {
+        return appointmentsRepository.existsBySpecialistAndPerson(requestAppointment.getPersonsId(), requestAppointment.getSpecialistsId());
+    }
 }

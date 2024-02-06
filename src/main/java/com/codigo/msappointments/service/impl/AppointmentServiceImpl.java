@@ -39,6 +39,10 @@ public class AppointmentServiceImpl implements AppointmentsService {
     public ResponseBase createAppointment(RequestAppointment requestAppointment) {
         boolean validateAppointment = appointmentsValidations.validateInput(requestAppointment);
         if (validateAppointment) {
+            boolean validateExistsAppointment = appointmentsValidations.validateExistsAppointment(requestAppointment);
+            if (validateExistsAppointment) {
+                return new ResponseBase(Constants.CODE_ERROR_DATA_INPUT, Constants.MESSAGE_ERROR_APPOINTMENT_EXISTS, Optional.empty());
+            }
             AppointmentsEntity appointmentsEntity = getAppointmentsEntity(requestAppointment);
             appointmentsRepository.save(appointmentsEntity);
             return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESSAGE_SUCCESS, Optional.of(appointmentsEntity));

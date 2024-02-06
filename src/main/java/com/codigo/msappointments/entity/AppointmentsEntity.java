@@ -8,6 +8,10 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 
+@NamedQuery(
+        name = "AppointmentsEntity.existsBySpecialistAndPerson",
+        query = "select case when count(a)> 0 then true else false end from AppointmentsEntity a where a.personsEntity.idPersons=:personsId and a.specialistsEntity.idSpecialists=:specialistsId and a.status=1"
+)
 @Entity
 @Getter
 @Setter
