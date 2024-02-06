@@ -1,5 +1,6 @@
 package com.codigo.msappointments.service.impl;
 
+import com.codigo.appointmentslibrary.config.RedisService;
 import com.codigo.appointmentslibrary.constants.Constants;
 import com.codigo.appointmentslibrary.response.ResponseBase;
 import com.codigo.appointmentslibrary.util.Util;
@@ -24,12 +25,14 @@ public class AppointmentServiceImpl implements AppointmentsService {
     private final AppointmentsValidations appointmentsValidations;
     private final PersonsRepository personsRepository;
     private final SpecialistsRepository specialistsRepository;
+    private final RedisService redisService;
 
-    public AppointmentServiceImpl(AppointmentsRepository appointmentsRepository, AppointmentsValidations appointmentsValidations, PersonsRepository personsRepository, SpecialistsRepository specialistsRepository) {
+    public AppointmentServiceImpl(AppointmentsRepository appointmentsRepository, AppointmentsValidations appointmentsValidations, PersonsRepository personsRepository, SpecialistsRepository specialistsRepository, RedisService redisService) {
         this.appointmentsRepository = appointmentsRepository;
         this.appointmentsValidations = appointmentsValidations;
         this.personsRepository = personsRepository;
         this.specialistsRepository = specialistsRepository;
+        this.redisService = redisService;
     }
 
     @Override
@@ -46,11 +49,19 @@ public class AppointmentServiceImpl implements AppointmentsService {
 
     @Override
     public ResponseBase findOneAppointmentById(int id) {
-        Optional<AppointmentsEntity> appointment = appointmentsRepository.findById(id);
-        if (appointment.isPresent()) {
-            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESSAGE_SUCCESS, appointment);
+        String redisCache = redisService.getValueFromCache(Constants.REDIS_KEY_INFO_APPOINTMENTS+id);
+        if(redisCache != null){
+            AppointmentsEntity appointmentsEntity = Util.convertFromJson(redisCache, AppointmentsEntity.class);
+            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESSAGE_SUCCESS, Optional.of(appointmentsEntity));
         } else {
-            return new ResponseBase(Constants.CODE_ERROR_DATA_NOT, Constants.MESSAGE_ZERO_ROWS, Optional.empty());
+            Optional<AppointmentsEntity> appointment = appointmentsRepository.findById(id);
+            if (appointment.isPresent()) {
+                String redisData = Util.convertToJsonEntity(appointment.get());
+                redisService.saveInCache(Constants.REDIS_KEY_INFO_APPOINTMENTS+id,redisData);
+                return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESSAGE_SUCCESS, appointment);
+            } else {
+                return new ResponseBase(Constants.CODE_ERROR_DATA_NOT, Constants.MESSAGE_ZERO_ROWS, Optional.empty());
+            }
         }
     }
 
